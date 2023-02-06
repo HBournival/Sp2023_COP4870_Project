@@ -1,5 +1,4 @@
-﻿using Library.LMS.Models;
-using App.LearningManagement.Helpers;
+﻿using App.LearningManagement.Helpers;
 using Library.LMS.Models;
 using System;
 
@@ -9,18 +8,15 @@ namespace MyLMS
     internal class Program
     {
 
-
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World");
             var studentHelper = new StudentHelper();
 
-            var myCourse = new Course();
             Console.WriteLine("Choose an Action:");
             Console.WriteLine("1. Add a Student Enrollment");
             Console.WriteLine("2. Exit");
             var input = Console.ReadLine();
-            if (int.TryParse(input, out int result))
+            if(int.TryParse(input, out int result))
             {
                 while (result != 2)
                 {
@@ -28,11 +24,15 @@ namespace MyLMS
                     {
                         studentHelper.CreateStudentRecord();
                     }
-                    input = Console.ReadLine();
+                    input= Console.ReadLine();
                     int.TryParse(input, out result);
                 }
             }
-
+            
         }
     }
 }
+
+
+    
+  
