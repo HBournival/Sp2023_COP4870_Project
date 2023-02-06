@@ -12,20 +12,32 @@ namespace MyLMS
         {
             var studentHelper = new StudentHelper();
 
-            Console.WriteLine("Choose an Action:");
-            Console.WriteLine("1. Add a Student Enrollment");
-            Console.WriteLine("2. Exit");
-            var input = Console.ReadLine();
-            if(int.TryParse(input, out int result))
+            bool cont = true;
+            
+            while(cont)
             {
-                while (result != 2)
+
+                Console.WriteLine("\nChoose an Action:");
+                Console.WriteLine("0. Exit");
+                Console.WriteLine("1. Add a Student Enrollment");
+                Console.WriteLine("2. List All Enrolled Studnets");
+                var input = Console.ReadLine();
+
+                if (int.TryParse(input, out int result))
                 {
-                    if (result == 1)
+                    if (result == 0) { cont = false; }
+
+                    else if (result == 1)
                     {
                         studentHelper.CreateStudentRecord();
                     }
-                    input= Console.ReadLine();
-                    int.TryParse(input, out result);
+
+                    else if(result == 2)
+                    {
+                        studentHelper.ListStudents();
+                    }
+
+
                 }
             }
             
