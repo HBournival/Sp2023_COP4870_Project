@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Library.LMS.Models;
+using System;
+
 
 namespace MyLMS
 {
@@ -8,6 +10,8 @@ namespace MyLMS
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World");
+
+            var myCourse = new Course();
         }
     }
 }
