@@ -30,6 +30,8 @@ namespace MyLMS
                 Console.WriteLine("6. List All Courses");
                 Console.WriteLine("7. Update a Course");
                 Console.WriteLine("8. Search for a Course");
+                Console.WriteLine("9. Create an Assignment");
+                Console.WriteLine("10. Search for Students Courses");
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -69,6 +71,14 @@ namespace MyLMS
                     else if(result == 8)
                     {
                         courseHelper.SearchCourses();
+                    }
+                    else if(result == 9)
+                    {
+                        Console.WriteLine("Due to Company Layoffs, this feature is not Optimized for Public Use...");
+                    }
+                    else if(result == 10)
+                    {
+                        Console.WriteLine("Due to Company Layoffs, this feature is not Optimized for Public Use...");
                     }
                 }
             }
