@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace App.LearningManagement.Helpers
 {
@@ -12,7 +13,7 @@ namespace App.LearningManagement.Helpers
     {
 
         private StudentService sService = new StudentService();
-        public void CreateStudentRecord()
+        public void CreateStudentRecord(Person? selectStu = null)
         {
             Console.WriteLine("What is the name of the student");
             var name = Console.ReadLine();
@@ -38,14 +39,39 @@ namespace App.LearningManagement.Helpers
                 classEnum = PersonClassification.Senior;
             }
 
-            var student = new Person
-            {
-                Id = int.Parse(id ?? "0"),
-                Name = name ?? string.Empty,
-                Classification = classEnum
-            };
+            bool isCreate = false;
 
-            sService.Add(student);
+            if (selectStu == null)
+            {
+                isCreate = true;
+                selectStu = new Person();
+            }
+
+            if(isCreate) { selectStu.Id = int.Parse(id ?? "0"); }
+            selectStu.Name = name ?? string.Empty;
+            selectStu.Classification = classEnum;
+
+            if(isCreate)
+            {
+                sService.Add(selectStu);
+            }
+        }
+
+        public void UpdateStudentRecord() 
+        {
+            Console.WriteLine("Select a Student to Update: ");
+            ListStudents();
+
+            var selectStr = Console.ReadLine();
+
+            if (int.TryParse(selectStr, out int selectInt))
+            {
+                var selectStu = sService.Students.FirstOrDefault(s => s.Id == selectInt);
+                if(selectStu != null)
+                {
+                    CreateStudentRecord(selectStu);
+                }
+            }
         }
 
         public void ListStudents()
