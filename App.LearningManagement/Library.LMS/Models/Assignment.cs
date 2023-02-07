@@ -8,6 +8,9 @@ namespace Library.LMS.Models
         public decimal tPoints { get; set; }
         public DateTime DueDate { get; set; }
 
-
+        public override string ToString()
+        {
+            return $"[{Name}] {tPoints} - {Description}";
+        }
     }
 }

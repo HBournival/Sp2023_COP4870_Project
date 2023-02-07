@@ -13,8 +13,10 @@ namespace MyLMS
         {
             var sService = new StudentService();
             var cService = new CourseService();
+            var aService = new AssignmentService();
             var studentHelper = new StudentHelper(sService, cService);
-            var courseHelper = new CourseHelper(sService, cService);
+            var courseHelper = new CourseHelper(sService, cService, aService);
+            var assignmentHelper = new AssignmentHelper(sService, aService);
 
             bool cont = true;
             
@@ -33,6 +35,7 @@ namespace MyLMS
                 Console.WriteLine("8. Search for a Course");
                 Console.WriteLine("9. Create an Assignment");
                 Console.WriteLine("10. Search for Students Courses");
+                Console.WriteLine("11. List All Assignments");
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -75,11 +78,15 @@ namespace MyLMS
                     }
                     else if(result == 9)
                     {
-                        Console.WriteLine("Due to Company Layoffs, this feature is not Optimized for Public Use...");
+                        assignmentHelper.CreateAssignment();
                     }
                     else if(result == 10)
                     {
                         studentHelper.ListStudents(0);
+                    }
+                    else if(result == 11)
+                    {
+                        assignmentHelper.ListAssignments();
                     }
                 }
             }
