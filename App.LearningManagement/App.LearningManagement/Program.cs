@@ -12,8 +12,9 @@ namespace MyLMS
         static void Main(string[] args)
         {
             var sService = new StudentService();
-            var studentHelper = new StudentHelper(sService);
-            var courseHelper = new CourseHelper(sService);
+            var cService = new CourseService();
+            var studentHelper = new StudentHelper(sService, cService);
+            var courseHelper = new CourseHelper(sService, cService);
 
             bool cont = true;
             
@@ -45,7 +46,7 @@ namespace MyLMS
 
                     else if(result == 2)
                     {
-                        studentHelper.ListStudents();
+                        studentHelper.ListStudents(1);
                     }
 
                     else if(result == 3)
@@ -78,7 +79,7 @@ namespace MyLMS
                     }
                     else if(result == 10)
                     {
-                        Console.WriteLine("Due to Company Layoffs, this feature is not Optimized for Public Use...");
+                        studentHelper.ListStudents(0);
                     }
                 }
             }

@@ -13,10 +13,12 @@ namespace App.LearningManagement.Helpers
     {
 
         private StudentService sService;
+        private CourseService cService;
 
-        public StudentHelper(StudentService srv)
+        public StudentHelper(StudentService srv, CourseService crv)
         {
             sService = srv;
+            cService = crv;
         }
         public void CreateStudentRecord(Person? selectStu = null)
         {
@@ -65,7 +67,7 @@ namespace App.LearningManagement.Helpers
         public void UpdateStudentRecord() 
         {
             Console.WriteLine("Select a Student to Update: ");
-            ListStudents();
+            ListStudents(1);
 
             var selectStr = Console.ReadLine();
 
@@ -79,9 +81,19 @@ namespace App.LearningManagement.Helpers
             }
         }
 
-        public void ListStudents()
+        public void ListStudents(int x)
         {
             sService.Students.ForEach(Console.WriteLine);
+
+            if (x == 0)
+            {
+                Console.WriteLine("Select a Student:");
+                var selectStr = Console.ReadLine();
+                var selectInt = int.Parse(selectStr ?? "0");
+
+                Console.WriteLine("Student's Courses: ");
+                cService.Courses.Where(c => c.Roster.Any(s => s.Id == selectInt)).ToList().ForEach(Console.WriteLine);
+            }
         }
 
         public void SearchStudents()
@@ -89,7 +101,7 @@ namespace App.LearningManagement.Helpers
             Console.WriteLine("Enter a Name You Wish to Search: ");
             var query = Console.ReadLine() ?? string.Empty;
 
-            sService.Search(query).ToList().ForEach(Console.WriteLine); 
+            sService.Search(query).ToList().ForEach(Console.WriteLine);
         }
     }
 }
