@@ -15,5 +15,10 @@ namespace Library.LMS.Models
             Assignments = new List<Assignment>();
             Modules = new List<Module>();
         }
+
+        public override string ToString()
+        {
+            return $"\n{Code} - {Name}\n";
+        }
     }
 }
