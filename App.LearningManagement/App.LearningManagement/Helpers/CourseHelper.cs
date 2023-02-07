@@ -67,7 +67,7 @@ namespace App.LearningManagement.Helpers
                 selectCor.Code = code;
                 selectCor.Name = name;
                 selectCor.Description = description;
-                selectCor.Roster = roster;
+                selectCor.Roster.AddRange(roster);
 
             if (isCreate)
             {
