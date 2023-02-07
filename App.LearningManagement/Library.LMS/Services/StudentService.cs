@@ -20,5 +20,10 @@ namespace Library.LMS.Services
         { 
             get { return sList; } 
         }
+
+        public IEnumerable<Person> Search(string query)
+        {
+            return sList.Where(s => s.Name.ToUpper().Contains(query.ToUpper()));
+        }
     }
 }

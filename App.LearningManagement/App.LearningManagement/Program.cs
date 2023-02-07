@@ -21,6 +21,7 @@ namespace MyLMS
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Add a Student Enrollment");
                 Console.WriteLine("2. List All Enrolled Studnets");
+                Console.WriteLine("3. Search for a Student");
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -35,6 +36,11 @@ namespace MyLMS
                     else if(result == 2)
                     {
                         studentHelper.ListStudents();
+                    }
+
+                    else if(result == 3)
+                    {
+                        studentHelper.SearchStudents();
                     }
 
 
