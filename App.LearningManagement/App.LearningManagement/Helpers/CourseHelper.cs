@@ -27,7 +27,7 @@ namespace App.LearningManagement.Helpers
             var description = Console.ReadLine() ?? string.Empty;
 
 
-            Console.WriteLine("Which Students Would you Like to Enroll in This Course?('X' to Exit)");
+            Console.WriteLine("Which Students Would you Like to Enroll in This Course?\n(Enter Their Student I.D.)\n('X' to Exit)");
             var roster = new List<Person>();
             bool adding = true;
             while (adding)  
@@ -67,7 +67,7 @@ namespace App.LearningManagement.Helpers
                 selectCor.Code = code;
                 selectCor.Name = name;
                 selectCor.Description = description;
-                selectCor.Roster = roster;
+                selectCor.Roster.AddRange(roster);
 
             if (isCreate)
             {
