@@ -26,6 +26,7 @@ namespace MyLMS
                 Console.WriteLine("4. Add a New Course");
                 Console.WriteLine("5. Update a Student Enrollment");
                 Console.WriteLine("6. List All Courses");
+                Console.WriteLine("7. Update a Course");
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -57,6 +58,10 @@ namespace MyLMS
                     else if(result == 6)
                     {
                         courseHelper.ListCourses();
+                    }
+                    else if(result == 7)
+                    {
+                        courseHelper.UpdateCourseRecord();
                     }
 
                 }
