@@ -12,7 +12,7 @@ namespace App.LearningManagement.Helpers
     {
         private CourseService cService = new CourseService();
 
-        public void CreateCourseRecord()
+        public void CreateCourseRecord(Course? selectCor = null)
         {
             Console.WriteLine("What is the Course Code?");
             var code = Console.ReadLine() ?? string.Empty;
@@ -21,15 +21,36 @@ namespace App.LearningManagement.Helpers
             Console.WriteLine("What is the Description of the Course?");
             var description = Console.ReadLine() ?? string.Empty;
 
-            var course = new Course
+            bool isCreate = false;
+            if(selectCor == null)
             {
-                Code = code,
-                Name = name,
-                Description = description
-            };
+                isCreate = true;
+                selectCor = new Course();
+            }
 
-            cService.Add(course);
+                selectCor.Code = code;
+                selectCor.Name = name;
+                selectCor.Description = description;
 
+            if (isCreate)
+            {
+                cService.Add(selectCor);
+            }
+
+        }
+
+        public void UpdateCourseRecord()
+        {
+            Console.WriteLine("Select a Course to Update(Enter the Course Code): ");
+            ListCourses();
+
+            var selectStr = Console.ReadLine();
+
+                var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
+                if (selectCor != null)
+                {
+                    CreateCourseRecord(selectCor);
+                }
         }
 
         public void ListCourses()
