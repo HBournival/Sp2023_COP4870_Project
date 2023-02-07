@@ -12,11 +12,13 @@ namespace App.LearningManagement.Helpers
     {
         private CourseService cService;
         private StudentService sService;
+        private AssignmentService aService;
 
-        public CourseHelper(StudentService srv, CourseService crv)
+        public CourseHelper(StudentService srv, CourseService crv, AssignmentService arv)
         { 
             sService = srv;
             cService = crv;
+            aService = arv;
         }
         public void CreateCourseRecord(Course? selectCor = null)
         {
