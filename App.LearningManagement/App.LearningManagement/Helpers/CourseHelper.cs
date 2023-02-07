@@ -57,5 +57,13 @@ namespace App.LearningManagement.Helpers
         {
             cService.Courses.ForEach(Console.WriteLine);
         }
+
+        public void SearchCourses()
+        {
+            Console.WriteLine("Enter a Course You Wish to Search: ");
+            var query = Console.ReadLine() ?? string.Empty;
+
+            cService.Search(query).ToList().ForEach(Console.WriteLine);
+        }
     }
 }

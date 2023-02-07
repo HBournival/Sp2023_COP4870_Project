@@ -9,7 +9,7 @@ namespace Library.LMS.Services
 {
     public class StudentService
     {
-        public List<Person> sList = new List<Person>();
+        private List<Person> sList = new List<Person>();
 
         public void Add(Person person)
         {
