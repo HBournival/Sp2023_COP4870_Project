@@ -16,5 +16,9 @@ namespace Library.LMS.Services
             cList.Add(course);
         }
 
+        public List<Course> Courses 
+        {
+            get { return cList; }
+        }
     }
 }
