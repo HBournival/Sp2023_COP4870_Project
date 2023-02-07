@@ -10,12 +10,13 @@ namespace App.LearningManagement.Helpers
 {
     public class CourseHelper
     {
-        private CourseService cService = new CourseService();
+        private CourseService cService;
         private StudentService sService;
 
-        public CourseHelper(StudentService srv)
+        public CourseHelper(StudentService srv, CourseService crv)
         { 
             sService = srv;
+            cService = crv;
         }
         public void CreateCourseRecord(Course? selectCor = null)
         {
