@@ -24,6 +24,7 @@ namespace MyLMS
                 Console.WriteLine("2. List All Enrolled Studnets");
                 Console.WriteLine("3. Search for a Student");
                 Console.WriteLine("4. Add a New Course");
+                Console.WriteLine("5. Update a Student Enrollment");
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -48,7 +49,10 @@ namespace MyLMS
                     {
                         courseHelper.CreateCourseRecord();
                     }
-
+                    else if(result == 5)
+                    {
+                        studentHelper.UpdateStudentRecord();
+                    }
 
                 }
             }
