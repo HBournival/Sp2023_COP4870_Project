@@ -52,5 +52,13 @@ namespace App.LearningManagement.Helpers
         {
             sService.Students.ForEach(Console.WriteLine);
         }
+
+        public void SearchStudents()
+        {
+            Console.WriteLine("Enter a Name You Wish to Search: ");
+            var query = Console.ReadLine() ?? string.Empty;
+
+            sService.Search(query).ToList().ForEach(Console.WriteLine); 
+        }
     }
 }
