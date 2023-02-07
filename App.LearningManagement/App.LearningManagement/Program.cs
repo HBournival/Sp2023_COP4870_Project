@@ -11,6 +11,7 @@ namespace MyLMS
         static void Main(string[] args)
         {
             var studentHelper = new StudentHelper();
+            var courseHelper = new CourseHelper();
 
             bool cont = true;
             
@@ -22,6 +23,7 @@ namespace MyLMS
                 Console.WriteLine("1. Add a Student Enrollment");
                 Console.WriteLine("2. List All Enrolled Studnets");
                 Console.WriteLine("3. Search for a Student");
+                Console.WriteLine("4. Add a New Course");
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -41,6 +43,10 @@ namespace MyLMS
                     else if(result == 3)
                     {
                         studentHelper.SearchStudents();
+                    }
+                    else if(result == 4)
+                    {
+                        courseHelper.CreateCourseRecord();
                     }
 
 
