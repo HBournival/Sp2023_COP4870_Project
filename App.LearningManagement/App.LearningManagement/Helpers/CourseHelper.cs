@@ -30,7 +30,11 @@ namespace App.LearningManagement.Helpers
 
             cService.Add(course);
 
-            cService.cList.ForEach(Console.WriteLine);
+        }
+
+        public void ListCourses()
+        {
+            cService.Courses.ForEach(Console.WriteLine);
         }
     }
 }
