@@ -12,7 +12,12 @@ namespace App.LearningManagement.Helpers
     internal class StudentHelper
     {
 
-        private StudentService sService = new StudentService();
+        private StudentService sService;
+
+        public StudentHelper(StudentService srv)
+        {
+            sService = srv;
+        }
         public void CreateStudentRecord(Person? selectStu = null)
         {
             Console.WriteLine("What is the name of the student");

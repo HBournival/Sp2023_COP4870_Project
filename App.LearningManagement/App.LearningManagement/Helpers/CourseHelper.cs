@@ -11,7 +11,12 @@ namespace App.LearningManagement.Helpers
     public class CourseHelper
     {
         private CourseService cService = new CourseService();
+        private StudentService sService;
 
+        public CourseHelper(StudentService srv)
+        { 
+            sService = srv;
+        }
         public void CreateCourseRecord(Course? selectCor = null)
         {
             Console.WriteLine("What is the Course Code?");
@@ -20,6 +25,37 @@ namespace App.LearningManagement.Helpers
             var name = Console.ReadLine() ?? string.Empty;  
             Console.WriteLine("What is the Description of the Course?");
             var description = Console.ReadLine() ?? string.Empty;
+
+
+            Console.WriteLine("Which Students Would you Like to Enroll in This Course?('X' to Exit)");
+            var roster = new List<Person>();
+            bool adding = true;
+            while (adding)  
+            {
+                sService.Students.Where(s => !roster.Any(s2 => s2.Id == s.Id)).ToList().ForEach(Console.WriteLine);
+                var select = "X";
+                if(sService.Students.Any(s => !roster.Any(s2 => s2.Id == s.Id)))
+                {
+                    select = Console.ReadLine() ?? string.Empty;
+                }
+                
+
+                if(select.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    adding = false;
+                }
+
+                else
+                {
+                    var selectId = int.Parse(select);
+                    var selectStu = sService.Students.FirstOrDefault(s => s.Id == selectId);
+
+                    if(selectStu != null)
+                    {
+                        roster.Add(selectStu);
+                    }
+                }
+            }
 
             bool isCreate = false;
             if(selectCor == null)
@@ -31,6 +67,7 @@ namespace App.LearningManagement.Helpers
                 selectCor.Code = code;
                 selectCor.Name = name;
                 selectCor.Description = description;
+                selectCor.Roster = roster;
 
             if (isCreate)
             {

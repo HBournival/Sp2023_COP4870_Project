@@ -1,5 +1,6 @@
 ﻿using App.LearningManagement.Helpers;
 using Library.LMS.Models;
+using Library.LMS.Services;
 using System;
 
 
@@ -10,8 +11,9 @@ namespace MyLMS
 
         static void Main(string[] args)
         {
-            var studentHelper = new StudentHelper();
-            var courseHelper = new CourseHelper();
+            var sService = new StudentService();
+            var studentHelper = new StudentHelper(sService);
+            var courseHelper = new CourseHelper(sService);
 
             bool cont = true;
             
