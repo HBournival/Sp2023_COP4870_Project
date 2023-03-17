@@ -60,6 +60,53 @@ namespace App.LearningManagement.Helpers
                 }
             }
 
+            Console.WriteLine("Would You like to add any assignments to the course? (Y/N)");
+            var assignResoponse = Console.ReadLine() ?? "N";
+            var assignments = new List<Assignment>();
+            if(assignResoponse.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+            {
+                adding = true;
+                while(adding)
+                {
+                    //Name
+                    Console.WriteLine("Assignment Name: ");
+                    var aName = Console.ReadLine() ?? string.Empty;
+                    //Description
+                    Console.WriteLine("Description: ");
+                    var aDescription = Console.ReadLine() ?? string.Empty;
+                    //TotalPoints
+                    Console.WriteLine("Total Points Available: ");
+                    var totalPoints = decimal.Parse(Console.ReadLine() ?? "100");
+                    //DueDate
+                    Console.WriteLine("When is the Due Date: ");
+                    var dueDate = DateTime.Parse(Console.ReadLine() ?? "01/01/1900");
+
+                    assignments.Add(new Assignment
+                    {
+                        Name = aName,
+                        Description = aDescription,
+                        tPoints = totalPoints,
+                        DueDate = dueDate
+                    });
+
+                    Console.WriteLine("Would You Like to Add Another Assignment? (Y/N)");
+                    var ans = Console.ReadLine() ?? "N";
+                    
+                    if(ans.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        adding= true;
+                    }
+
+                    else
+                    {
+                        adding = false;
+                    }
+
+                }
+                    
+            }
+               
+
             bool isCreate = false;
             if(selectCor == null)
             {
@@ -71,6 +118,7 @@ namespace App.LearningManagement.Helpers
                 selectCor.Name = name;
                 selectCor.Description = description;
                 selectCor.Roster.AddRange(roster);
+                selectCor.Assignments.AddRange(assignments);
 
             if (isCreate)
             {

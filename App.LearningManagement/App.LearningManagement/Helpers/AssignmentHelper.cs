@@ -22,17 +22,20 @@ namespace App.LearningManagement.Helpers
         public void CreateAssignment(Assignment? selectAss = null)
         {
             Console.WriteLine("What is The Name of The Assignment?");
-            var name = Console.ReadLine();
+            var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is The Description of The Assignment?");
-            var script = Console.ReadLine();
+            var script = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("How many Points are Available on This Assignment?");
-            var points = Console.ReadLine();
+            var points = decimal.Parse(Console.ReadLine() ?? "100");
+            Console.WriteLine("When is the Due Date?");
+            var dDate = DateTime.Parse(Console.ReadLine() ?? "01/01/1900");
 
             selectAss = new Assignment();
 
-            selectAss.Name = name ?? string.Empty;
-            selectAss.Description = script ?? string.Empty;
-            selectAss.tPoints = int.Parse(points ?? "0");
+            selectAss.Name = name;
+            selectAss.Description = script;
+            selectAss.tPoints = points;
+            selectAss.DueDate = dDate; 
 
             aService.Add(selectAss);
         }
