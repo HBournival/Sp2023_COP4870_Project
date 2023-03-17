@@ -111,6 +111,8 @@ namespace MyLMS
             Console.WriteLine("2. List All Courses");
             Console.WriteLine("3. Update a Course");
             Console.WriteLine("4. Search for a Course");
+            Console.WriteLine("5. Show a Course's Roster");
+            Console.WriteLine("6. List a Course's Assignments");
 
             var input = Console.ReadLine();
             if (int.TryParse(input, out int result))
@@ -131,6 +133,14 @@ namespace MyLMS
                 else if (result == 4)
                 {
                     courseHelper.SearchCourses();
+                }
+                else if(result == 5)
+                {
+                    courseHelper.ListCourseRoster();
+                }
+                else if(result == 6)
+                {
+                    courseHelper.ListCourseAssignments();
                 }
             }
 
