@@ -32,22 +32,18 @@ namespace App.LearningManagement.Helpers
             
                
 
-            bool isCreate = false;
-            if(selectCor == null)
-            {
-                isCreate = true;
+            
                 selectCor = new Course();
-            }
+            
 
                 selectCor.Code = code;
                 selectCor.Name = name;
                 selectCor.Description = description;
                 
 
-            if (isCreate)
-            {
+            
                 cService.Add(selectCor);
-            }
+            
 
         }
 
@@ -61,30 +57,28 @@ namespace App.LearningManagement.Helpers
             var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
             if (selectCor != null)
             {
-                    Console.WriteLine("Would You like to the course data? (Y/N)");
-                    var assignResoponse = Console.ReadLine() ?? "N";
+                bool cont = true;
+                while (cont)
+                {
+                    Console.WriteLine("\nChoose an Action:");
+                    Console.WriteLine("0. Exit");
+                    Console.WriteLine("1. Update Course Data");
+                    Console.WriteLine("2. Add Students to the Roster");
+                    Console.WriteLine("3. Add Assignments to the Course");
+                    var input = Console.ReadLine();
 
-                    if (assignResoponse.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        EditCourseData(selectCor);
+                    if (int.TryParse(input, out int result))
+                    { 
+                        if(result== 0) { cont = false; }
+
+                        else if(result== 1) { EditCourseData(selectCor); }
+
+                        else if(result==2) { AddStudents(selectCor); }
+
+                        else if(result==3) { AddAssignments(selectCor); }
                     }
 
-                    Console.WriteLine("Would You like to add any Students to the course? (Y/N)");
-                    assignResoponse = Console.ReadLine() ?? "N";
-
-                    if (assignResoponse.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        AddStudents(selectCor);
-                    }
-
-
-                    Console.WriteLine("Would You like to add any assignments to the course? (Y/N)");
-                    assignResoponse = Console.ReadLine() ?? "N";
-
-                    if (assignResoponse.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        AddAssignments(selectCor);
-                    }
+                }
             }
         }
 
@@ -103,7 +97,6 @@ namespace App.LearningManagement.Helpers
 
         public void AddAssignments(Course selectCor)
         {
-            var assignments = new List<Assignment>();
             bool adding = true;
 
             while (adding)
@@ -121,7 +114,7 @@ namespace App.LearningManagement.Helpers
                 Console.WriteLine("When is the Due Date: ");
                 var dueDate = DateTime.Parse(Console.ReadLine() ?? "01/01/1900");
 
-                assignments.Add(new Assignment
+                selectCor.Assignments.Add(new Assignment
                 {
                     Name = aName,
                     Description = aDescription,
@@ -144,19 +137,17 @@ namespace App.LearningManagement.Helpers
 
             }
 
-            selectCor.Assignments.AddRange(assignments);
         }
 
         public void AddStudents(Course selectCor)
         {
             Console.WriteLine("Which Students Would you Like to Enroll in This Course?\n(Enter Their Student I.D.)\n('X' to Exit)");
-            var roster = new List<Person>();
             bool adding = true;
             while (adding)
             {
-                sService.Students.Where(s => !roster.Any(s2 => s2.Id == s.Id)).ToList().ForEach(Console.WriteLine);
+                sService.Students.Where(s => !selectCor.Roster.Any(s2 => s2.Id == s.Id)).ToList().ForEach(Console.WriteLine);
                 var select = "X";
-                if (sService.Students.Any(s => !roster.Any(s2 => s2.Id == s.Id)))
+                if (sService.Students.Any(s => !selectCor.Roster.Any(s2 => s2.Id == s.Id)))
                 {
                     select = Console.ReadLine() ?? string.Empty;
                 }
@@ -174,12 +165,11 @@ namespace App.LearningManagement.Helpers
 
                     if (selectStu != null)
                     {
-                        roster.Add(selectStu);
+                        selectCor.Roster.Add(selectStu);
                     }
                 }
             }
 
-            selectCor.Roster.AddRange(roster);
         }
 
         public void EditCourseData(Course selectCor)
@@ -195,6 +185,37 @@ namespace App.LearningManagement.Helpers
             selectCor.Code = code;
             selectCor.Name = name;
             selectCor.Description = description;
+        }
+
+        public void ListCourseRoster()
+        {
+            Console.WriteLine("Which Course's Roster Do you want to view?(Enter the Course Code): ");
+            ListCourses();
+
+            var selectStr = Console.ReadLine();
+
+            var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectCor != null)
+            {
+                selectCor.Roster.ForEach(Console.WriteLine);
+            }
+        }
+
+        public void ListCourseAssignments()
+        {
+
+            Console.WriteLine("Which Course's Assignment List Do you want to view?(Enter the Course Code): ");
+            ListCourses();
+
+            var selectStr = Console.ReadLine();
+
+            var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectCor != null)
+            {
+                selectCor.Assignments.ForEach(Console.WriteLine);
+            }
         }
     }
 }
