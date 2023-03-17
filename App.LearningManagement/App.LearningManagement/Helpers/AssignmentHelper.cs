@@ -19,8 +19,10 @@ namespace App.LearningManagement.Helpers
             aService = aSrv;
         }
 
-        public void CreateAssignment(Assignment? selectAss = null)
+        public Assignment CreateAssignment(Assignment? selectAss = null)
         {
+            Console.WriteLine("What is The Assignment's Id?");
+            var Id = int.Parse(Console.ReadLine());
             Console.WriteLine("What is The Name of The Assignment?");
             var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is The Description of The Assignment?");
@@ -32,12 +34,15 @@ namespace App.LearningManagement.Helpers
 
             selectAss = new Assignment();
 
+            selectAss.Id = Id;
             selectAss.Name = name;
             selectAss.Description = script;
             selectAss.tPoints = points;
             selectAss.DueDate = dDate; 
 
-            aService.Add(selectAss);
+//            aService.Add(selectAss);
+
+            return selectAss;
         }
         public void ListAssignments()
         {

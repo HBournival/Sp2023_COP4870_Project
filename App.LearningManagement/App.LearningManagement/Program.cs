@@ -27,13 +27,6 @@ namespace MyLMS
                 Console.WriteLine("1. Maintain Students");
                 Console.WriteLine("2. Maintain Courses");
 
-                
-                
-                
-                
-                /*Console.WriteLine("9. Create an Assignment");
-                
-                Console.WriteLine("11. List All Assignments");*/
                 var input = Console.ReadLine();
 
                 if (int.TryParse(input, out int result))
@@ -49,16 +42,7 @@ namespace MyLMS
                     {
                         ShowCourseMenu(courseHelper);
                     }
-                    
-                    /*else if(result == 9)
-                    {
-                        assignmentHelper.CreateAssignment();
-                    }
-                    
-                    else if(result == 11)
-                    {
-                        assignmentHelper.ListAssignments();
-                    }*/
+
                 }
             }
             
@@ -108,11 +92,16 @@ namespace MyLMS
         static void ShowCourseMenu(CourseHelper courseHelper)
         {
             Console.WriteLine("1. Add a New Course");
-            Console.WriteLine("2. List All Courses");
-            Console.WriteLine("3. Update a Course");
+            Console.WriteLine("2. Update a Course");
+            Console.WriteLine("3. List All Courses");
             Console.WriteLine("4. Search for a Course");
-            Console.WriteLine("5. Show a Course's Roster");
-            Console.WriteLine("6. List a Course's Assignments");
+            Console.WriteLine("5. Add a Student to a Course");
+            Console.WriteLine("6. Remove a Student from a Course");
+            Console.WriteLine("7. Add an Assignment to a Course");
+            Console.WriteLine("8. Update an Assignment");
+            Console.WriteLine("9. Remove an Assignment from a Course");
+            Console.WriteLine("10. List a Courses Roster");
+            Console.WriteLine("11. List a Course's Assignments");
 
             var input = Console.ReadLine();
             if (int.TryParse(input, out int result))
@@ -122,13 +111,13 @@ namespace MyLMS
                     courseHelper.CreateCourseRecord();
                 }
 
-                else if (result == 2)
+                else if (result == 3)
                 {
                     courseHelper.ListCourses();
                 }
-                else if (result == 3)
+                else if (result == 2)
                 {
-                    courseHelper.UpdateCourseRecord();
+                    courseHelper.UpdateCourseRecord(1);
                 }
                 else if (result == 4)
                 {
@@ -136,9 +125,29 @@ namespace MyLMS
                 }
                 else if(result == 5)
                 {
-                    courseHelper.ListCourseRoster();
+                    courseHelper.UpdateCourseRecord(2);
                 }
                 else if(result == 6)
+                {
+                    courseHelper.UpdateCourseRecord(4);
+                }
+                else if(result == 7)
+                {
+                    courseHelper.UpdateCourseRecord(3);
+                }
+                else if(result == 8)
+                {
+                    courseHelper.UpdateCourseRecord(6);
+                }
+                else if(result == 9)
+                {
+                    courseHelper.UpdateCourseRecord(5);
+                }
+                else if(result == 10)
+                {
+                    courseHelper.ListCourseRoster();
+                }
+                else if(result == 11)
                 {
                     courseHelper.ListCourseAssignments();
                 }
