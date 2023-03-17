@@ -9,19 +9,19 @@ namespace Library.LMS.Services
 {
     public class StudentService
     {
-        private List<Person> sList = new List<Person>();
+        private List<Student> sList = new List<Student>();
 
-        public void Add(Person person)
+        public void Add(Student person)
         {
             sList.Add(person);
         }
 
-        public List<Person> Students 
+        public List<Student> Students 
         { 
             get { return sList; } 
         }
 
-        public IEnumerable<Person> Search(string query)
+        public IEnumerable<Student> Search(string query)
         {
             return sList.Where(s => s.Name.ToUpper().Contains(query.ToUpper()));
         }

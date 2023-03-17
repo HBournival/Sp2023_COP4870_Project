@@ -20,7 +20,7 @@ namespace App.LearningManagement.Helpers
             sService = srv;
             cService = crv;
         }
-        public void CreateStudentRecord(Person? selectStu = null)
+        public void CreateStudentRecord(Student? selectStu = null)
         {
             Console.WriteLine("What is the name of the student");
             var name = Console.ReadLine();
@@ -51,7 +51,7 @@ namespace App.LearningManagement.Helpers
             if (selectStu == null)
             {
                 isCreate = true;
-                selectStu = new Person();
+                selectStu = new Student();
             }
 
             if(isCreate) { selectStu.Id = int.Parse(id ?? "0"); }
