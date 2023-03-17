@@ -47,7 +47,7 @@ namespace App.LearningManagement.Helpers
 
         }
 
-        public void UpdateCourseRecord()
+        public void UpdateCourseRecord(int x)
         {
             Console.WriteLine("Select a Course to Update(Enter the Course Code): ");
             ListCourses();
@@ -57,28 +57,17 @@ namespace App.LearningManagement.Helpers
             var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
             if (selectCor != null)
             {
-                bool cont = true;
-                while (cont)
-                {
-                    Console.WriteLine("\nChoose an Action:");
-                    Console.WriteLine("0. Exit");
-                    Console.WriteLine("1. Update Course Data");
-                    Console.WriteLine("2. Add Students to the Roster");
-                    Console.WriteLine("3. Add Assignments to the Course");
-                    var input = Console.ReadLine();
+                if(x == 1) { EditCourseData(selectCor); }
 
-                    if (int.TryParse(input, out int result))
-                    { 
-                        if(result== 0) { cont = false; }
+                else if(x == 2) { AddStudents(selectCor); }
 
-                        else if(result== 1) { EditCourseData(selectCor); }
+                else if(x == 3) { AddAssignments(selectCor); }
 
-                        else if(result==2) { AddStudents(selectCor); }
+                else if(x == 4) { RemoveStudent(selectCor); }
 
-                        else if(result==3) { AddAssignments(selectCor); }
-                    }
-
-                }
+                else if (x == 5) { RemoveAssignment(selectCor); }
+                
+                else if( x == 6) { UpdateAssignment (selectCor); }
             }
         }
 
@@ -101,6 +90,8 @@ namespace App.LearningManagement.Helpers
 
             while (adding)
             {
+                Console.WriteLine("What is The Assignment's Id?");
+                var Id = int.Parse(Console.ReadLine());
                 //Name
                 Console.WriteLine("Assignment Name: ");
                 var aName = Console.ReadLine() ?? string.Empty;
@@ -116,6 +107,7 @@ namespace App.LearningManagement.Helpers
 
                 selectCor.Assignments.Add(new Assignment
                 {
+                    Id = Id,
                     Name = aName,
                     Description = aDescription,
                     tPoints = totalPoints,
@@ -215,6 +207,97 @@ namespace App.LearningManagement.Helpers
             if (selectCor != null)
             {
                 selectCor.Assignments.ForEach(Console.WriteLine);
+            }
+        }
+
+        public void RemoveStudent(Course selectCor)
+        {
+            Console.WriteLine("Which Students Would you Like to Remove in This Course?\n(Enter Their Student I.D.)\n('X' to Exit)");
+            bool removing = true;
+            while (removing)
+            {
+                selectCor.Roster.ForEach(Console.WriteLine);
+                var select = "X";
+                if (selectCor.Roster.Any())
+                {
+                    select = Console.ReadLine() ?? string.Empty;
+                }
+                else
+                {
+                    select = null;
+                }
+
+                if (select.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    removing = false;
+                }
+
+                else
+                {
+                    var selectId = int.Parse(select);
+                    var selectStu = sService.Students.FirstOrDefault(s => s.Id == selectId);
+
+                    if (selectStu != null)
+                    {
+                        selectCor.Roster.Remove(selectStu);
+                    }
+                }
+            }
+        }
+
+        public void RemoveAssignment(Course selectCor)
+        {
+            bool removing = true;
+
+            while (removing)
+            {
+                Console.WriteLine("Enter the Id of the assignment you want to Remove\n");
+                selectCor.Assignments.ForEach(Console.WriteLine);
+
+                var select = Console.ReadLine() ?? string.Empty;
+                var selectInt = int.Parse(select);
+                var selectAss = selectCor.Assignments.FirstOrDefault(a => a.Id == selectInt);
+                if (selectAss != null)
+                {
+                    var index = selectCor.Assignments.IndexOf(selectAss);
+                    selectCor.Assignments.RemoveAt(index);
+                }
+
+
+                Console.WriteLine("Would You Like to Add Remove another Assignment? (Y/N)");
+                var ans = Console.ReadLine() ?? "N";
+
+                if (ans.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    removing = true;
+                }
+
+                else
+                {
+                    removing = false;
+                }
+
+            }
+        }
+
+        public void UpdateAssignment(Course selectCor)
+        {
+            AssignmentHelper aHelp = new AssignmentHelper(sService, aService);
+
+            Console.WriteLine("Enter the Id of the assignment you want to update\n");
+            selectCor.Assignments.ForEach(Console.WriteLine);
+
+            var select = Console.ReadLine() ?? string.Empty;
+            var selectInt = int.Parse(select);
+            var selectAss = selectCor.Assignments.FirstOrDefault(a => a.Id == selectInt);
+            if (selectAss != null)
+            {
+                var index = selectCor.Assignments.IndexOf(selectAss);
+                selectCor.Assignments.RemoveAt(index);
+
+                
+
+                selectCor.Assignments.Insert(index, aHelp.CreateAssignment());
             }
         }
     }
