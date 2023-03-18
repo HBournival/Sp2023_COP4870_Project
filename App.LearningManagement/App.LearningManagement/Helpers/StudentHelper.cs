@@ -1,5 +1,6 @@
 ﻿using Library.LMS.Models;
 using Library.LMS.Services;
+using MyLMS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,14 @@ namespace App.LearningManagement.Helpers
 
         private StudentService sService;
         private CourseService cService;
+        private ListNavigator<Person> studentNav;
 
         public StudentHelper(StudentService srv, CourseService crv)
         {
             sService = srv;
             cService = crv;
+
+            studentNav = new ListNavigator<Person>(sService.Students, 2);
         }
         public void CreateStudentRecord(Person? selectStu = null)
         {
@@ -147,19 +151,60 @@ namespace App.LearningManagement.Helpers
             }
         }
 
+        private void NavigateStudents(int x)
+        {
+            bool keepPaging = true;
+            while(keepPaging)
+            {
+                foreach (var pair in studentNav.GetCurrentPage())
+                {
+                    Console.WriteLine($"{pair.Key}. {pair.Value}");
+                }
+
+                if (studentNav.HasPreviousPage)
+                {
+                    Console.WriteLine("P. Previous Page");
+                }
+                if (studentNav.HasNextPage)
+                {
+                    Console.WriteLine("N. Next Page");
+                }
+
+
+                Console.WriteLine("Make a Selection('X' To Exit):");
+                var selectStr = Console.ReadLine();
+
+                
+                if(selectStr.Equals("P", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    studentNav.GoBackward();
+                }
+                else if (selectStr.Equals("N", StringComparison.InvariantCultureIgnoreCase))
+                {
+                   studentNav.GoForward();  
+                }
+                else if(selectStr.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    keepPaging = false;
+                }
+
+                else
+                {
+                    if (x == 0)
+                    {
+                        var selectInt = int.Parse(selectStr ?? "0");
+
+                        Console.WriteLine("Student's Courses: ");
+                        cService.Courses.Where(c => c.Roster.Any(s => s.Id == selectInt)).ToList().ForEach(Console.WriteLine);
+                        keepPaging = false;
+                    }
+                }
+            }
+            
+        }
         public void ListStudents(int x)
         {
-            sService.Students.ForEach(Console.WriteLine);
-
-            if (x == 0)
-            {
-                Console.WriteLine("Select a Student:");
-                var selectStr = Console.ReadLine();
-                var selectInt = int.Parse(selectStr ?? "0");
-
-                Console.WriteLine("Student's Courses: ");
-                cService.Courses.Where(c => c.Roster.Any(s => s.Id == selectInt)).ToList().ForEach(Console.WriteLine);
-            }
+           NavigateStudents(x);
         }
 
         public void SearchStudents()
