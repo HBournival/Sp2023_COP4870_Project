@@ -1,5 +1,6 @@
 ﻿using Library.LMS.Models;
 using Library.LMS.Services;
+using MyLMS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,15 @@ namespace App.LearningManagement.Helpers
         private CourseService cService;
         private StudentService sService;
         private AssignmentService aService;
+        private ListNavigator<Course> courseNav;
 
         public CourseHelper(StudentService srv, CourseService crv, AssignmentService arv)
         {
             sService = srv;
             cService = crv;
             aService = arv;
+
+            courseNav = new ListNavigator<Course>(cService.Courses, 2);
         }
         public void CreateCourseRecord(Course? selectCor = null)
         {
@@ -77,9 +81,48 @@ namespace App.LearningManagement.Helpers
             }
         }
 
+        public void NavigateCourses()
+        {
+            bool keepPaging = true;
+            while (keepPaging)
+            {
+                foreach (var pair in courseNav.GetCurrentPage())
+                {
+                    Console.WriteLine($"{pair.Key}. {pair.Value}");
+                }
+
+                if (courseNav.HasPreviousPage)
+                {
+                    Console.WriteLine("P. Previous Page");
+                }
+                if (courseNav.HasNextPage)
+                {
+                    Console.WriteLine("N. Next Page");
+                }
+
+
+                Console.WriteLine("Make a Selection('X' To Exit):");
+                var selectStr = Console.ReadLine();
+
+
+                if (selectStr.Equals("P", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    courseNav.GoBackward();
+                }
+                else if (selectStr.Equals("N", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    courseNav.GoForward();
+                }
+                else if (selectStr.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    keepPaging = false;
+                }
+            }
+        }
+
         public void ListCourses()
         {
-            cService.Courses.ForEach(Console.WriteLine);
+            NavigateCourses();
         }
 
         public void SearchCourses()

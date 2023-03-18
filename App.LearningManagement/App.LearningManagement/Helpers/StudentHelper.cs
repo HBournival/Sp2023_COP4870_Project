@@ -23,7 +23,7 @@ namespace App.LearningManagement.Helpers
             sService = srv;
             cService = crv;
 
-            studentNav = new ListNavigator<Person>(sService.Students, 2);
+            studentNav = new ListNavigator<Person>(sService.Students);
         }
         public void CreateStudentRecord(Person? selectStu = null)
         {

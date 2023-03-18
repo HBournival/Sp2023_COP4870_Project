@@ -21,7 +21,7 @@ namespace Library.LMS.Models
 
         public override string ToString()
         {
-            return $"\n{Code} - {Name}\n";
+            return $"{Code} - {Name}\n";
         }
     }
 }
