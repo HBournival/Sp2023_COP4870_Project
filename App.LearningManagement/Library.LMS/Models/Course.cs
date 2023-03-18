@@ -11,6 +11,9 @@ namespace Library.LMS.Models
         public List<Module> Modules { get; set; }
 
         public Course() { 
+            Code = string.Empty;
+            Name = string.Empty;
+            Description = string.Empty;
             Roster = new List<Person>();
             Assignments = new List<Assignment>();
             Modules = new List<Module>();

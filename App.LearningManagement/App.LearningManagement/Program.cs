@@ -102,6 +102,10 @@ namespace MyLMS
             Console.WriteLine("9. Remove an Assignment from a Course");
             Console.WriteLine("10. List a Courses Roster");
             Console.WriteLine("11. List a Course's Assignments");
+            Console.WriteLine("12. Create a New Module For a Course");
+            Console.WriteLine("13. List a Course's Modules");
+            Console.WriteLine("14. Update a Course's Module");
+            Console.WriteLine("15. Remove a Course's Module");
 
             var input = Console.ReadLine();
             if (int.TryParse(input, out int result))
@@ -123,33 +127,51 @@ namespace MyLMS
                 {
                     courseHelper.SearchCourses();
                 }
-                else if(result == 5)
+                else if (result == 5)
                 {
                     courseHelper.UpdateCourseRecord(2);
                 }
-                else if(result == 6)
+                else if (result == 6)
                 {
                     courseHelper.UpdateCourseRecord(4);
                 }
-                else if(result == 7)
+                else if (result == 7)
                 {
                     courseHelper.UpdateCourseRecord(3);
                 }
-                else if(result == 8)
+                else if (result == 8)
                 {
                     courseHelper.UpdateCourseRecord(6);
                 }
-                else if(result == 9)
+                else if (result == 9)
                 {
                     courseHelper.UpdateCourseRecord(5);
                 }
-                else if(result == 10)
+                else if (result == 10)
                 {
                     courseHelper.ListCourseRoster();
                 }
-                else if(result == 11)
+                else if (result == 11)
                 {
                     courseHelper.ListCourseAssignments();
+                }
+                else if (result == 12)
+                {
+                    courseHelper.UpdateCourseRecord(7);
+                }
+
+                else if(result == 13)
+                {
+                    courseHelper.ListCourseModules();
+                }
+
+                else if(result == 14)
+                {
+                    courseHelper.UpdateCourseRecord(8);
+                }
+                else if(result == 15)
+                {
+                    courseHelper.UpdateCourseRecord(9);
                 }
             }
 
