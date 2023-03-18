@@ -24,7 +24,7 @@ namespace MyLMS
             {
                 Console.WriteLine("\nChoose an Action:");
                 Console.WriteLine("0. Exit");
-                Console.WriteLine("1. Maintain Students");
+                Console.WriteLine("1. Maintain People");
                 Console.WriteLine("2. Maintain Courses");
 
                 var input = Console.ReadLine();
@@ -51,11 +51,11 @@ namespace MyLMS
         static void ShowStudentMenu(StudentHelper studentHelper)
         {
             Console.WriteLine("\nChoose an Action:");
-            Console.WriteLine("1. Add a Student Enrollment");
-            Console.WriteLine("2. List All Enrolled Studnets");
-            Console.WriteLine("3. Search for a Student");
-            Console.WriteLine("4. Update a Student Enrollment");
-            Console.WriteLine("5. Search for Students Courses");
+            Console.WriteLine("1. Add a New Person");
+            Console.WriteLine("2. List All People");
+            Console.WriteLine("3. Search for a Person");
+            Console.WriteLine("4. Update a Person's Record");
+            Console.WriteLine("5. Search for a Student's Courses");
 
             var input = Console.ReadLine();
             if (int.TryParse(input, out int result))
