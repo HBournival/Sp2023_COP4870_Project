@@ -15,7 +15,7 @@ namespace App.LearningManagement.Helpers
         private AssignmentService aService;
 
         public CourseHelper(StudentService srv, CourseService crv, AssignmentService arv)
-        { 
+        {
             sService = srv;
             cService = crv;
             aService = arv;
@@ -25,25 +25,25 @@ namespace App.LearningManagement.Helpers
             Console.WriteLine("What is the Course Code?");
             var code = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is the Name of the Course?");
-            var name = Console.ReadLine() ?? string.Empty;  
+            var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is the Description of the Course?");
             var description = Console.ReadLine() ?? string.Empty;
 
-            
-               
 
-            
-                selectCor = new Course();
-            
 
-                selectCor.Code = code;
-                selectCor.Name = name;
-                selectCor.Description = description;
-                
 
-            
-                cService.Add(selectCor);
-            
+
+            selectCor = new Course();
+
+
+            selectCor.Code = code;
+            selectCor.Name = name;
+            selectCor.Description = description;
+
+
+
+            cService.Add(selectCor);
+
 
         }
 
@@ -57,17 +57,23 @@ namespace App.LearningManagement.Helpers
             var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
             if (selectCor != null)
             {
-                if(x == 1) { EditCourseData(selectCor); }
+                if (x == 1) { EditCourseData(selectCor); }
 
-                else if(x == 2) { AddStudents(selectCor); }
+                else if (x == 2) { AddStudents(selectCor); }
 
-                else if(x == 3) { AddAssignments(selectCor); }
+                else if (x == 3) { AddAssignments(selectCor); }
 
-                else if(x == 4) { RemoveStudent(selectCor); }
+                else if (x == 4) { RemoveStudent(selectCor); }
 
                 else if (x == 5) { RemoveAssignment(selectCor); }
-                
-                else if( x == 6) { UpdateAssignment (selectCor); }
+
+                else if (x == 6) { UpdateAssignment(selectCor); }
+
+                else if (x == 7) { CreateModule(selectCor); }
+
+                else if (x == 8) { UpdateModule(selectCor); }
+
+                else if (x == 9) { RemoveModule(selectCor); }
             }
         }
 
@@ -192,6 +198,8 @@ namespace App.LearningManagement.Helpers
             {
                 selectCor.Roster.ForEach(Console.WriteLine);
             }
+
+            Console.WriteLine("\n\n");
         }
 
         public void ListCourseAssignments()
@@ -208,6 +216,8 @@ namespace App.LearningManagement.Helpers
             {
                 selectCor.Assignments.ForEach(Console.WriteLine);
             }
+
+            Console.WriteLine("\n\n");
         }
 
         public void RemoveStudent(Course selectCor)
@@ -224,7 +234,7 @@ namespace App.LearningManagement.Helpers
                 }
                 else
                 {
-                    select = null;
+                    select = "X";
                 }
 
                 if (select.Equals("X", StringComparison.InvariantCultureIgnoreCase))
@@ -295,10 +305,273 @@ namespace App.LearningManagement.Helpers
                 var index = selectCor.Assignments.IndexOf(selectAss);
                 selectCor.Assignments.RemoveAt(index);
 
-                
+
 
                 selectCor.Assignments.Insert(index, aHelp.CreateAssignment());
             }
+        }
+
+        public void CreateModule(Course selectCor)
+        {
+            Console.WriteLine("Id: ");
+            var id = int.Parse(Console.ReadLine());
+            Console.WriteLine("Name: ");
+            var name = Console.ReadLine();
+            Console.WriteLine("Description");
+            var description = Console.ReadLine();
+
+            var module = new Module
+            {
+                Id = id,
+                Name = name,
+                Description = description,
+            };
+
+            Console.WriteLine("Would you like to add content to this module?(Y/N)");
+            var choice = Console.ReadLine() ?? "N";
+
+            while (choice.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine("What Type of content to you want to add?");
+                Console.WriteLine("1. Assignment");
+                Console.WriteLine("2. File");
+                Console.WriteLine("3. Page");
+                var cChoice = int.Parse(Console.ReadLine() ?? "0");
+
+                switch (cChoice)
+                {
+                    case 1:
+                        var newAssignmentContent = CreateAssignmentItem(selectCor);
+                        if (newAssignmentContent != null)
+                        {
+                            module.Content.Add(newAssignmentContent);
+                        }
+                        break;
+
+                    case 2:
+                        var newFileContent = CreateFileItem(selectCor);
+                        if (newFileContent != null)
+                        {
+                            module.Content.Add(newFileContent);
+                        }
+                        break;
+
+                    case 3:
+                        var newPageItem = CreatePageItem(selectCor);
+                        if (newPageItem != null)
+                        {
+                            module.Content.Add(newPageItem);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                Console.WriteLine("Would you like to add more content?(Y/N");
+                choice = Console.ReadLine() ?? "N";
+
+            }
+
+            if (module != null)
+            {
+                selectCor.Modules.Add(module);
+            }
+
+        }
+
+        private AssignmentItem? CreateAssignmentItem(Course c)
+        {
+            Console.WriteLine("Name: ");
+            var name = Console.ReadLine();
+            Console.WriteLine("Description");
+            var description = Console.ReadLine();
+
+            Console.WriteLine("Which Assignment should be added?");
+            c.Assignments.ForEach(Console.WriteLine);
+            var choice = int.Parse(Console.ReadLine() ?? "-1");
+
+            if (choice >= 0)
+            {
+                var assignment = c.Assignments.FirstOrDefault(a => a.Id == choice);
+                return new AssignmentItem
+                {
+                    Assignment = assignment,
+                    Name = name,
+                    Description = description
+                };
+            }
+
+            return null;
+        }
+
+        private FileItem? CreateFileItem(Course c)
+        {
+            Console.WriteLine("Name: ");
+            var name = Console.ReadLine();
+            Console.WriteLine("Description");
+            var description = Console.ReadLine();
+
+            Console.WriteLine("Enter a Path to the File");
+            var filePath = Console.ReadLine();
+
+            return new FileItem
+            {
+                Path = filePath,
+                Name = name,
+                Description = description
+            };
+        }
+
+        private PageItem? CreatePageItem(Course c)
+        {
+            Console.WriteLine("Name: ");
+            var name = Console.ReadLine();
+            Console.WriteLine("Description");
+            var description = Console.ReadLine();
+
+            Console.WriteLine("Enter Page Content");
+            var body = Console.ReadLine();
+
+            return new PageItem
+            {
+                HtmlBody = body,
+                Name = name,
+                Description = description
+            };
+        }
+
+        public void ListCourseModules()
+        {
+            Console.WriteLine("Which Course's Modules Do you want to view?(Enter the Course Code): ");
+            ListCourses();
+
+            var selectStr = Console.ReadLine();
+
+            var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectCor != null)
+            {
+                selectCor.Modules.ForEach(Console.WriteLine);
+            }
+
+            Console.WriteLine("\n\n");
+        }
+
+        public void UpdateModule(Course selectCor)
+        {
+            Console.WriteLine("Enter the Id of the Module you want to update\n");
+            selectCor.Modules.ForEach(Console.WriteLine);
+
+            var select = Console.ReadLine() ?? string.Empty;
+            var selectInt = int.Parse(select);
+            var selectMod = selectCor.Modules.FirstOrDefault(m => m.Id == selectInt);
+
+            if (selectMod == null)
+            {
+                Console.WriteLine("The Selected Module Does Not Exist");
+                return;
+            }
+
+
+
+            Console.WriteLine("Would You Like to Update this Module's Description?(Y/N)");
+            var choice = Console.ReadLine() ?? string.Empty;
+
+            if(choice.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine("Name: ");
+                selectMod.Name = Console.ReadLine();
+                Console.WriteLine("Description");
+                selectMod.Description = Console.ReadLine();
+            }
+
+
+            Console.WriteLine("Would you like to add content to this module?(Y/N)");
+            choice = Console.ReadLine() ?? "N";
+
+            while (choice.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+            {
+                Console.WriteLine("What Type of content to you want to add?");
+                Console.WriteLine("1. Assignment");
+                Console.WriteLine("2. File");
+                Console.WriteLine("3. Page");
+                var cChoice = int.Parse(Console.ReadLine() ?? "0");
+
+                switch (cChoice)
+                {
+                    case 1:
+                        var newAssignmentContent = CreateAssignmentItem(selectCor);
+                        if (newAssignmentContent != null)
+                        {
+                            selectMod.Content.Add(newAssignmentContent);
+                        }
+                        break;
+
+                    case 2:
+                        var newFileContent = CreateFileItem(selectCor);
+                        if (newFileContent != null)
+                        {
+                            selectMod.Content.Add(newFileContent);
+                        }
+                        break;
+
+                    case 3:
+                        var newPageItem = CreatePageItem(selectCor);
+                        if (newPageItem != null)
+                        {
+                            selectMod.Content.Add(newPageItem);
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                Console.WriteLine("Would you like to add more content?(Y/N");
+                choice = Console.ReadLine() ?? "N";
+
+            }
+
+
+
+
+        }
+
+        public void RemoveModule(Course selectCor)
+        {
+            Console.WriteLine("Which Modules Would you Like to Remove in This Course?\n(Enter The Module's I.D.)\n('X' to Exit)");
+            bool removing = true;
+            while (removing)
+            {
+                selectCor.Modules.ForEach(Console.WriteLine);
+                var select = "X";
+                if (selectCor.Modules.Any())
+                {
+                    select = Console.ReadLine() ?? string.Empty;
+                }
+                else
+                {
+                    select = "X";
+                }
+
+                if (select.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    removing = false;
+                }
+
+                else
+                {
+                    var selectId = int.Parse(select);
+                    var selectStu = selectCor.Modules.FirstOrDefault(s => s.Id == selectId);
+
+                    if (selectStu != null)
+                    {
+                        selectCor.Modules.Remove(selectStu);
+                    }
+                }
+            }
+
         }
     }
 }
