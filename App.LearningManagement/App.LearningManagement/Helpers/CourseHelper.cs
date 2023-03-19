@@ -655,5 +655,79 @@ namespace App.LearningManagement.Helpers
             }
 
         }
+
+        public void CreateAnnouncement(Course selectCor)
+        {
+            Announcement temp = new Announcement();
+
+            Console.WriteLine("What is the Name of the Announcement?");
+            temp.Name = Console.ReadLine() ?? string.Empty;
+            Console.WriteLine("Enter the Contents of your Announcemnet:");
+            temp.Description = Console.ReadLine() ?? string.Empty;
+
+            
+
+
+            selectCor.Announcements.Add(temp);
+        }
+
+        public void EditAnnouncement(Course selectCor)
+        {
+            Console.WriteLine("Enter the Id of the Announcement you want to update\n");
+
+            
+
+            selectCor.Assignments.ForEach(Console.WriteLine);
+
+            var select = Console.ReadLine() ?? string.Empty;
+            var selectInt = int.Parse(select);
+            var selectAnn = selectCor.Announcements.FirstOrDefault(a => a.Id == selectInt);
+
+            if (selectAnn != null)
+            {
+                Console.WriteLine("What is The Name?");
+                selectAnn.Name = Console.ReadLine();
+
+                Console.WriteLine("What is the Description");
+                selectAnn.Description = Console.ReadLine();
+            }
+        }
+
+        public void RemoveAnnouncement(Course selectCor)
+        {
+            Console.WriteLine("Which Announcements Would you Like to Remove in This Course?\n(Enter The Module's I.D.)\n('X' to Exit)");
+            bool removing = true;
+            while (removing)
+            {
+                selectCor.Announcements.ForEach(Console.WriteLine);
+                var select = "X";
+                if (selectCor.Announcements.Any())
+                {
+                    select = Console.ReadLine() ?? string.Empty;
+                }
+                else
+                {
+                    select = "X";
+                }
+
+                if (select.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    removing = false;
+                }
+
+                else
+                {
+                    var selectId = int.Parse(select);
+                    var selectStu = selectCor.Announcements.FirstOrDefault(s => s.Id == selectId);
+
+                    if (selectStu != null)
+                    {
+                        selectCor.Announcements.Remove(selectStu);
+                    }
+                }
+            }
+        }
+
+        }
     }
 }
