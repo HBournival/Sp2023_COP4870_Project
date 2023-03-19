@@ -59,11 +59,9 @@ namespace App.LearningManagement.Helpers
             }
 
             
-            Console.WriteLine("What is the name of the student");
+            Console.WriteLine("What is the name of the Person");
             var name = Console.ReadLine();
 
-            Console.WriteLine("What is the id of the student");
-            var id = Console.ReadLine();
 
             if(selectStu is Student)
             {
@@ -91,7 +89,6 @@ namespace App.LearningManagement.Helpers
                 {
                     studentRec.Classification = classEnum;
 
-                    studentRec.Id = int.Parse(id ?? "0");
                     studentRec.Name = name ?? string.Empty;
 
 
@@ -105,7 +102,6 @@ namespace App.LearningManagement.Helpers
 
             else if(selectStu is TeachingAssistant)
             {
-                selectStu.Id = int.Parse(id ?? "0");
                 selectStu.Name = name ?? string.Empty;
 
 
@@ -117,7 +113,6 @@ namespace App.LearningManagement.Helpers
 
             else if(selectStu is Instructor) 
             {
-                selectStu.Id = int.Parse(id ?? "0");
                 selectStu.Name = name ?? string.Empty;
 
 
