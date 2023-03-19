@@ -52,7 +52,8 @@ namespace App.LearningManagement.Helpers
             var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is the Description of the Course?");
             var description = Console.ReadLine() ?? string.Empty;
-
+            Console.WriteLine("How Many Credit Hours does this Course have?");
+            var cHours = Console.ReadLine() ?? string.Empty;
 
 
 
@@ -63,6 +64,7 @@ namespace App.LearningManagement.Helpers
             selectCor.Code = code;
             selectCor.Name = name;
             selectCor.Description = description;
+            selectCor.CreditHours = cHours;
 
 
 
@@ -273,11 +275,14 @@ namespace App.LearningManagement.Helpers
             var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is the Description of the Course?");
             var description = Console.ReadLine() ?? string.Empty;
+            Console.WriteLine("How Many Credit Hours does this Course have?");
+            var cHours = Console.ReadLine() ?? string.Empty;
 
 
             selectCor.Code = code;
             selectCor.Name = name;
             selectCor.Description = description;
+            selectCor.CreditHours = cHours;
         }
 
         public void ListCourseRoster()
