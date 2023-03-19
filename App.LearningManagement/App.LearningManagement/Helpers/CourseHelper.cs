@@ -237,8 +237,28 @@ namespace App.LearningManagement.Helpers
 
         public void EditCourseData(Course selectCor)
         {
+            var temp = selectCor.Code;
+
+            codes.Remove(temp);
+
             Console.WriteLine("What is the Course Code?");
             var code = Console.ReadLine() ?? string.Empty;
+
+            if (codes.Contains(code))
+            {
+                bool badCode = true;
+                while (badCode)
+                {
+                    Console.WriteLine("The Code You Entered Is Already Occupied by Another Course.\nPlease Enter a New Code");
+                    code = Console.ReadLine() ?? string.Empty;
+
+                    if (!codes.Contains(code))
+                    {
+                        badCode = false;
+                    }
+                }
+            }
+
             Console.WriteLine("What is the Name of the Course?");
             var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is the Description of the Course?");
