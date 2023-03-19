@@ -55,6 +55,8 @@ namespace App.LearningManagement.Helpers
         {
             Console.WriteLine("Select a Course to Update(Enter the Course Code): ");
             ListCourses();
+            Console.WriteLine("Confirm The Course Code");
+
 
             var selectStr = Console.ReadLine();
 
@@ -117,6 +119,11 @@ namespace App.LearningManagement.Helpers
                 {
                     keepPaging = false;
                 }
+                else
+                {
+                    return;
+                }
+
             }
         }
 
@@ -139,8 +146,6 @@ namespace App.LearningManagement.Helpers
 
             while (adding)
             {
-                Console.WriteLine("What is The Assignment's Id?");
-                var Id = int.Parse(Console.ReadLine());
                 //Name
                 Console.WriteLine("Assignment Name: ");
                 var aName = Console.ReadLine() ?? string.Empty;
@@ -156,7 +161,6 @@ namespace App.LearningManagement.Helpers
 
                 selectCor.Assignments.Add(new Assignment
                 {
-                    Id = Id,
                     Name = aName,
                     Description = aDescription,
                     tPoints = totalPoints,
@@ -356,8 +360,6 @@ namespace App.LearningManagement.Helpers
 
         public void CreateModule(Course selectCor)
         {
-            Console.WriteLine("Id: ");
-            var id = int.Parse(Console.ReadLine());
             Console.WriteLine("Name: ");
             var name = Console.ReadLine();
             Console.WriteLine("Description");
@@ -365,7 +367,6 @@ namespace App.LearningManagement.Helpers
 
             var module = new Module
             {
-                Id = id,
                 Name = name,
                 Description = description,
             };
