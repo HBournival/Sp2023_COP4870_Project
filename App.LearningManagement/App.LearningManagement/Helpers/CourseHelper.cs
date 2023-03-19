@@ -15,7 +15,6 @@ namespace App.LearningManagement.Helpers
         private StudentService sService;
         private AssignmentService aService;
         private ListNavigator<Course> courseNav;
-        private List<String> codes;
 
         public CourseHelper(StudentService srv, CourseService crv, AssignmentService arv)
         {
@@ -30,26 +29,6 @@ namespace App.LearningManagement.Helpers
         {
             Console.WriteLine("What is the Course Code?");
             var code = Console.ReadLine() ?? string.Empty;
-
-
-            if (codes.Contains(code))
-            {
-                bool cCode = false;
-                while (!cCode)
-                {
-                    Console.WriteLine("That Code is Already Occupied by Another Course.\nPlease Enter A Different Course Code");
-                    code = Console.ReadLine() ?? string.Empty;
-
-                    if(!codes.Contains(code))
-                    {
-                        cCode = true;
-                    }
-                }
-            }
-            codes.Add(code);
-
-
-
             Console.WriteLine("What is the Name of the Course?");
             var name = Console.ReadLine() ?? string.Empty;
             Console.WriteLine("What is the Description of the Course?");
