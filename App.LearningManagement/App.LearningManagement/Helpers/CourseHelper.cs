@@ -1,11 +1,13 @@
 ﻿using Library.LMS.Models;
 using Library.LMS.Services;
+using Microsoft.VisualBasic;
 using MyLMS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace App.LearningManagement.Helpers
 {
@@ -51,7 +53,7 @@ namespace App.LearningManagement.Helpers
             Console.WriteLine("What is the Description of the Course?");
             var description = Console.ReadLine() ?? string.Empty;
 
-            
+
 
 
             codes.Add(code);
@@ -98,6 +100,14 @@ namespace App.LearningManagement.Helpers
                 else if (x == 8) { UpdateModule(selectCor); }
 
                 else if (x == 9) { RemoveModule(selectCor); }
+
+                else if (x == 10) { CreateAnnouncement(selectCor); }
+
+                else if (x == 11) { EditAnnouncement(selectCor); }
+
+                else if (x == 12) { RemoveAnnouncement(selectCor); }
+
+                else if (x == 13) { ListAnnouncements(); }
             }
         }
 
@@ -527,6 +537,7 @@ namespace App.LearningManagement.Helpers
         {
             Console.WriteLine("Which Course's Modules Do you want to view?(Enter the Course Code): ");
             ListCourses();
+            Console.WriteLine("Confirm The Course Code:");
 
             var selectStr = Console.ReadLine();
 
@@ -560,7 +571,7 @@ namespace App.LearningManagement.Helpers
             Console.WriteLine("Would You Like to Update this Module's Description?(Y/N)");
             var choice = Console.ReadLine() ?? string.Empty;
 
-            if(choice.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
+            if (choice.Equals("Y", StringComparison.InvariantCultureIgnoreCase))
             {
                 Console.WriteLine("Name: ");
                 selectMod.Name = Console.ReadLine();
@@ -654,6 +665,93 @@ namespace App.LearningManagement.Helpers
                 }
             }
 
+        }
+
+        public void CreateAnnouncement(Course selectCor)
+        {
+            Announcement temp = new Announcement();
+
+            Console.WriteLine("What is the Name of the Announcement?");
+            temp.Name = Console.ReadLine() ?? string.Empty;
+            Console.WriteLine("Enter the Contents of your Announcemnet:");
+            temp.Description = Console.ReadLine() ?? string.Empty;
+
+            
+
+
+            selectCor.Announcements.Add(temp);
+        }
+
+        public void EditAnnouncement(Course selectCor)
+        {
+            Console.WriteLine("Enter the Id of the Announcement you want to update\n");
+            selectCor.Assignments.ForEach(Console.WriteLine);
+
+            var select = Console.ReadLine() ?? string.Empty;
+            var selectInt = int.Parse(select);
+            var selectAnn = selectCor.Announcements.FirstOrDefault(a => a.Id == selectInt);
+
+            if (selectAnn != null)
+            {
+                Console.WriteLine("What is The Name?");
+                selectAnn.Name = Console.ReadLine();
+
+                Console.WriteLine("What is the Description");
+                selectAnn.Description = Console.ReadLine();
+            }
+        }
+
+        public void RemoveAnnouncement(Course selectCor)
+        {
+            Console.WriteLine("Which Announcements Would you Like to Remove in This Course?\n(Enter The Module's I.D.)\n('X' to Exit)");
+            bool removing = true;
+            while (removing)
+            {
+                selectCor.Announcements.ForEach(Console.WriteLine);
+                var select = "X";
+                if (selectCor.Announcements.Any())
+                {
+                    select = Console.ReadLine() ?? string.Empty;
+                }
+                else
+                {
+                    select = "X";
+                }
+
+                if (select.Equals("X", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    removing = false;
+                }
+
+                else
+                {
+                    var selectId = int.Parse(select);
+                    var selectStu = selectCor.Announcements.FirstOrDefault(s => s.Id == selectId);
+
+                    if (selectStu != null)
+                    {
+                        selectCor.Announcements.Remove(selectStu);
+                    }
+                }
+            }
+        }
+
+        public void ListAnnouncements()
+        {
+            Console.WriteLine("Which Course's Announcements Do you want to view?(Enter the Course Code): ");
+            ListCourses();
+            Console.WriteLine("Confirm the Course Code");
+
+            var selectStr = Console.ReadLine();
+
+            var selectCor = cService.Courses.FirstOrDefault(s => s.Code.Equals(selectStr, StringComparison.InvariantCultureIgnoreCase));
+
+            if (selectCor != null)
+            {
+                selectCor.Announcements.ForEach(Console.WriteLine);
+            }
+
+            Console.WriteLine("\n\n");
         }
     }
 }

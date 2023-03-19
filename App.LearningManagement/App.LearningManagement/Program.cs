@@ -106,6 +106,10 @@ namespace MyLMS
             Console.WriteLine("13. List a Course's Modules");
             Console.WriteLine("14. Update a Course's Module");
             Console.WriteLine("15. Remove a Course's Module");
+            Console.WriteLine("16. Create Announcemnet");
+            Console.WriteLine("17. Edit Announcemnet");
+            Console.WriteLine("18. Remove Announcemnet");
+            Console.WriteLine("19. Display Announcemnets");
 
             var input = Console.ReadLine();
             if (int.TryParse(input, out int result))
@@ -172,6 +176,25 @@ namespace MyLMS
                 else if(result == 15)
                 {
                     courseHelper.UpdateCourseRecord(9);
+                }
+                else if(result == 16)
+                {
+                    courseHelper.UpdateCourseRecord(10);
+                }
+
+                else if(result == 17)
+                {
+                    courseHelper.UpdateCourseRecord(11);
+                }
+
+                else if(result == 18)
+                {
+                    courseHelper.UpdateCourseRecord(12);
+                }
+
+                else if(result == 19)
+                {
+                    courseHelper.UpdateCourseRecord(13);
                 }
             }
 
