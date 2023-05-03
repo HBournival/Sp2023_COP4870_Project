@@ -9,6 +9,21 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Button
+            Text="Course Manager"
+            Clicked="CourseManagerClicked"/>
+        <Button
+            Text="Enroll a Student"
+            Clicked="EnrollmentClicked"/>
+        <Button
+            Text="Create a Course"
+            Clicked="CourseCreateClicked"/>
+        <Button
+            Text="Remove a Course"
+            Clicked="DeleteCourseClicked"/>
+        <Button
+            Text="Remove a Student"
+            Clicked="DeleteStudentClicked"/>
+        <Button
             Text="Cancel"
             Clicked="CancelClicked"
             />

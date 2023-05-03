@@ -14,4 +14,24 @@ public partial class InstructorView : ContentPage
 	{
 		Shell.Current.GoToAsync("//MainPage");
 	}
+    private void CourseManagerClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
+    private void CourseCreateClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
+    private void EnrollmentClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
+    private void DeleteStudentClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
+    private void DeleteCourseClicked(object sender, EventArgs e)
+    {
+        Shell.Current.GoToAsync("//MainPage");
+    }
 }

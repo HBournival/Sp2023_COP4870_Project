@@ -9,6 +9,15 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Button
+            Text="Assignments"
+            Clicked="AssignmentClicked"/>
+        <Button
+            Text="Courses"
+            Clicked="CourseClicked"/>
+        <Button
+            Text="GPA"
+            Clicked="GPAClicked"/>
+        <Button
             Text="Cancel"
             Clicked="CancelClicked"
             />
